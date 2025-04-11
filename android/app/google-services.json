@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "190941704849",
+    "firebase_url": "https://messagingapp-feb93-default-rtdb.firebaseio.com",
+    "project_id": "messagingapp-feb93",
+    "storage_bucket": "messagingapp-feb93.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190941704849:android:e3652c00ac1c79cb124530",
+        "android_client_info": {
+          "package_name": "com.example.fcm_flutter_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5-T3HIX6tEyRVu8vUVdf2ODYyZ9nYkUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190941704849:android:3c8440037a94852b124530",
+        "android_client_info": {
+          "package_name": "com.example.flutter_riverpod_examples"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5-T3HIX6tEyRVu8vUVdf2ODYyZ9nYkUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190941704849:android:67898e44c9a0de45124530",
+        "android_client_info": {
+          "package_name": "com.example.messaging_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5-T3HIX6tEyRVu8vUVdf2ODYyZ9nYkUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
