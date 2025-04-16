@@ -1,0 +1,96 @@
+Riverpod Package Notes:
+
+-> Use Case of Riverpod in Flutter:
+? Catch programming errors at compile-time rather than at runtime
+? Easily fetch, cache, and update data from a remote source
+? Perform reactive caching and easily update your UI
+? Depend on asynchronous or computed state
+? Write testable code and keep logic outside the widget tree
+? Create, use, and combine providers with minimal boilerplate code
+? Dispose of the state of a provider when it is no longer used
+
+
+-> ProviderScope(): This widget that stores the state of all the providers we create.
+? They completely replace design patterns such as singletons, service locators, dependency injection, and InheritedWidgets.
+? They allow you to store some state and easily access it in multiple locations.
+? They allow you to optimize performance by filtering widget rebuilds or caching expensive state computations.
+? They make your code more testable, since each provider can be overridden to behave differently during a test.
+
+
+-> Creating and Reading a Provider:
+
+Example:
+// provider that returns a string value
+final helloWorldProvider = Provider((ref) {
+  return 'Hello world';
+});
+
+A function that creates the state. This gives us a `ref` parameter that we can use to read other providers, perform some custom dispose logic, and more.
+
+
+
+
+
+-> Flutter Riverpod Tip: Use AsyncValue rather than FutureBuilder or StreamBuilder
+We are using FutureBuilder or StreamBuilder for asynchronous activity.
+For Example, need to get data from server so we use FutureBuilder with
+1. an input value
+2. a builder function that we can use to "map" an asynchronous snapshot to a widget
+
+In the builder method we have AsyncSnapshot class. This class include following
+class AsyncSnapshot<T> {
+  final ConnectionState connectionState;
+  final T? data;
+  final Object? error;
+  final StackTrace? stackTrace;
+  bool get hasData => data != null;
+  bool get hasError => error != null;
+}
+
+This is not great because you need to check at least three different properties (connectionState, data, and error) to handle all cases, but the compiler won't warn you if you forget to do so.
+The main problem here is that the connectionState, data, error, and stackTrace variables are all independent of each other. But this is not a good representation for states that should be mutually exclusive.
+And this is what leads to all the if-else statements inside our builder.
+
+Dart doesn't have sealed unions: sealed unions meaning: a sealed union is a powerful tool for building robust and type-safe code by limiting the possibilities for a given type, promoting clarity, and enabling features like pattern matching with compile-time guarantees of exhaustiveness. 
+
+for more info: https://codewithandrea.com/articles/flutter-use-async-value-not-future-stream-builder/#the-real-problem-dart-doesnt-have-sealed-unions
+
+
+
+
+
+-> What is WidgetRef?: 
+It is an object that allows widgets to interact with providers.
+In other words, WidgetRef lets us access any provider in our codebase (as long as we import the corresponding file). This is by design because all Riverpod providers are global.
+
+Riverpod offers eight different kinds of providers, all suited for separate use cases:
+
+Provider
+StateProvider (legacy)
+StateNotifierProvider (legacy)
+FutureProvider
+StreamProvider
+ChangeNotifierProvider (legacy)
+NotifierProvider (new in Riverpod 2.0)
+AsyncNotifierProvider (new in Riverpod 2.0)
+
+
+-> The autoDispose modifier:
+If we're working with FutureProvider or StreamProvider, we'll want to dispose of any listeners when our provider is no longer in use. If we use autoDispose, the provider will be disposed once all listeners are removed (that is, when the widgets are unmounted).
+
+Another use case for autoDispose is when we're using FutureProvider as a wrapper for an HTTP request that fires when the user opens a new screen.
+If we want to cancel the HTTP request when the user leaves the screen before the request is completed, we can use ref.onDispose() to perform some custom cancellation logic
+
+
+-> Caching with Timeout:
+we can call ref.keepAlive() to preserve the state so that the request won't fire again if the user leaves and re-enters the same screen. The keepAlive method will tell the provider to keep its state indefinitely, causing it to update only if we refresh or invalidate it.
+for more info: https://codewithandrea.com/articles/flutter-state-management-riverpod/#caching-with-timeout
+
+
+-> The family modifier:
+family is a modifier that we can use to pass an argument to a provider.
+It works by adding a second type annotation and an additional parameter that we can use inside the provider body
+for more info: https://codewithandrea.com/articles/flutter-state-management-riverpod/#the-family-modifier
+
+https://codewithandrea.com/articles/flutter-riverpod-data-caching-providers-lifecycle/
+
